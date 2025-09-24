@@ -346,7 +346,7 @@ function Index() {
       questions: questions.slice(0, olympiad.questionsCount),
       currentQuestionIndex: 0,
       answers: [],
-      timeLeft: olympiad.duration * 60,
+      timeLeft: 0,
       isComplete: false,
       startTime: new Date()
     });
@@ -397,7 +397,7 @@ function Index() {
       completedAt: new Date(),
       position: Math.floor(Math.random() * 100) + 1,
       totalParticipants: olympiad.participants,
-      certificateUrl: score >= totalQuestions * 0.7 ? `/certificates/cert-${Date.now()}.pdf` : undefined
+      certificateUrl: `/certificates/cert-${Date.now()}.pdf`
     };
     
     const updatedUser = {
@@ -1225,27 +1225,27 @@ function Index() {
       const percentage = Math.round((score / quizState.questions.length) * 100);
       
       return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 flex items-center justify-center py-12 px-4">
-          <Card className="w-full max-w-2xl animate-scale-in">
-            <CardContent className="p-12 text-center">
-              <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                {percentage >= 70 ? (
-                  <Icon name="Trophy" size={48} className="text-primary" />
-                ) : (
-                  <Icon name="Award" size={48} className="text-primary" />
-                )}
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-orange-25 to-white flex items-center justify-center py-12 px-4">
+          <Card className="w-full max-w-2xl animate-scale-in shadow-2xl border-2 border-primary-200">
+            <CardContent className="p-12 text-center bg-gradient-to-br from-white to-primary-25 rounded-lg">
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <Icon name="Trophy" size={64} className="text-primary" />
               </div>
-              <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">
-                {percentage >= 70 ? 'Поздравляем!' : 'Олимпиада завершена!'}
+              <h1 className="text-5xl font-montserrat font-bold text-secondary mb-6">
+                Олимпиада завершена!
               </h1>
-              <p className="text-xl text-muted-foreground font-open-sans mb-8">
+              <p className="text-2xl text-muted-foreground font-open-sans mb-8">
                 Вы набрали {score} из {quizState.questions.length} баллов ({percentage}%)
               </p>
-              {percentage >= 70 && (
-                <Badge className="bg-primary text-white text-lg px-6 py-2 mb-8">
-                  Сертификат будет доступен в профиле!
-                </Badge>
-              )}
+              <Badge className="bg-gradient-to-r from-primary to-orange-500 text-white text-xl px-8 py-3 mb-8 shadow-lg">
+                Сертификат готов к скачиванию!
+              </Badge>
+              <div className="bg-gradient-to-r from-primary-50 to-orange-50 p-6 rounded-xl mb-6">
+                <Icon name="Star" size={32} className="text-primary mx-auto mb-2" />
+                <p className="text-lg text-secondary font-montserrat font-semibold">
+                  Отличная работа! Продолжайте развиваться!
+                </p>
+              </div>
               <p className="text-muted-foreground font-open-sans">
                 Переходим в личный кабинет...
               </p>
@@ -1258,33 +1258,30 @@ function Index() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 py-12 px-4">
         <div className="max-w-4xl mx-auto">
-          <Card className="mb-8 animate-fade-in">
+          <Card className="mb-8 animate-fade-in shadow-2xl border-2 border-primary-200 bg-gradient-to-br from-white to-primary-25">
             <CardContent className="p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h1 className="text-2xl font-montserrat font-bold text-secondary mb-2">
-                    {olympiad?.title}
-                  </h1>
-                  <p className="text-muted-foreground font-open-sans">
+              <div className="text-center mb-8">
+                <h1 className="text-3xl font-montserrat font-bold text-secondary mb-4">
+                  {olympiad?.title}
+                </h1>
+                <div className="flex items-center justify-center space-x-4">
+                  <Badge className="bg-primary text-white text-lg px-4 py-2">
                     Вопрос {quizState.currentQuestionIndex + 1} из {quizState.questions.length}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-montserrat font-bold text-primary mb-1">
-                    {Math.floor(quizState.timeLeft / 60)}:{(quizState.timeLeft % 60).toString().padStart(2, '0')}
-                  </div>
-                  <p className="text-sm text-muted-foreground font-open-sans">Времени осталось</p>
+                  </Badge>
+                  <Badge variant="outline" className="border-primary text-primary text-lg px-4 py-2">
+                    Без ограничения времени
+                  </Badge>
                 </div>
               </div>
               
-              <div className="w-full bg-gray-200 rounded-full h-3 mb-8">
+              <div className="w-full bg-gradient-to-r from-gray-100 to-gray-200 rounded-full h-4 mb-8 shadow-inner">
                 <div 
-                  className="bg-primary h-3 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-primary to-orange-500 h-4 rounded-full transition-all duration-500 shadow-sm"
                   style={{ width: `${progress}%` }}
                 />
               </div>
               
-              <div className="bg-white rounded-2xl p-8 border-2 border-primary-100">
+              <div className="bg-gradient-to-br from-white to-primary-25 rounded-2xl p-8 border-2 border-primary-200 shadow-lg">
                 <h2 className="text-2xl font-montserrat font-semibold text-secondary mb-8 leading-relaxed">
                   {currentQuestion.question}
                 </h2>
@@ -1294,10 +1291,10 @@ function Index() {
                     <Button
                       key={index}
                       variant="outline"
-                      className="p-6 h-auto text-left justify-start border-2 border-gray-200 hover:border-primary hover:bg-primary-50 transition-all duration-300 group"
+                      className="p-6 h-auto text-left justify-start border-2 border-gray-200 hover:border-primary hover:bg-gradient-to-r hover:from-primary-50 hover:to-orange-50 transition-all duration-300 group shadow-md hover:shadow-lg"
                       onClick={() => answerQuestion(index)}
                     >
-                      <div className="w-8 h-8 bg-primary-100 group-hover:bg-primary-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                      <div className="w-8 h-8 bg-gradient-to-br from-primary-100 to-primary-200 group-hover:from-primary-200 group-hover:to-orange-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0 shadow-sm">
                         <span className="font-montserrat font-bold text-primary">
                           {String.fromCharCode(65 + index)}
                         </span>
