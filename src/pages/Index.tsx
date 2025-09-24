@@ -13,7 +13,7 @@ import Icon from '@/components/ui/icon';
 
 type Grade = 'preschool' | 'grade1' | 'grade2' | 'grade3' | 'grade4';
 type Subject = 'math' | 'russian' | 'english' | 'reading' | 'traffic' | 'informatics' | 'logic' | 'world' | 'meta';
-type ViewType = 'home' | 'olympiads' | 'faq' | 'about' | 'contacts' | 'auth' | 'profile' | 'change-password';
+type ViewType = 'home' | 'olympiads' | 'faq' | 'about' | 'contacts' | 'auth' | 'profile' | 'change-password' | 'olympiad-quiz';
 
 interface Olympiad {
   id: string;
@@ -57,6 +57,24 @@ interface TeamMember {
 interface FAQItem {
   question: string;
   answer: string;
+}
+
+interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+}
+
+interface QuizState {
+  olympiadId: string;
+  questions: QuizQuestion[];
+  currentQuestionIndex: number;
+  answers: number[];
+  timeLeft: number;
+  isComplete: boolean;
+  startTime: Date;
 }
 
 const gradeNames = {
@@ -154,6 +172,71 @@ const mockOlympiads: Olympiad[] = [
   }
 ];
 
+const mockQuestions: { [olympiadId: string]: QuizQuestion[] } = {
+  '1': [
+    {
+      id: '1-1',
+      question: 'Сколько будет 5 + 3?',
+      options: ['6', '7', '8', '9'],
+      correctAnswer: 2,
+      explanation: '5 + 3 = 8. Считаем: 5, 6, 7, 8!'
+    },
+    {
+      id: '1-2',
+      question: 'У Кати было 10 конфет. Она съела 3. Сколько осталось?',
+      options: ['5', '6', '7', '8'],
+      correctAnswer: 2,
+      explanation: '10 - 3 = 7. От 10 отнимаем 3, получается 7 конфет.'
+    },
+    {
+      id: '1-3',
+      question: 'Какое число больше: 4 или 6?',
+      options: ['4', '6', 'Одинаковые', 'Не знаю'],
+      correctAnswer: 1,
+      explanation: '6 больше чем 4. На числовой прямой 6 стоит правее 4.'
+    }
+  ],
+  '3': [
+    {
+      id: '3-1',
+      question: 'Продолжите последовательность: 2, 4, 6, 8, ...',
+      options: ['9', '10', '11', '12'],
+      correctAnswer: 1,
+      explanation: 'Это последовательность четных чисел. После 8 идет 10.'
+    },
+    {
+      id: '3-2',
+      question: 'Если все птицы умеют летать, а пингвин - птица, то пингвин умеет летать?',
+      options: ['Да', 'Нет', 'Не знаю', 'Иногда'],
+      correctAnswer: 1,
+      explanation: 'Не все птицы умеют летать! Пингвины - это птицы, которые не летают, но отлично плавают.'
+    },
+    {
+      id: '3-3',
+      question: 'У фермера есть куры и кролики, всего 10 голов и 28 ног. Сколько кроликов?',
+      options: ['3', '4', '5', '6'],
+      correctAnswer: 1,
+      explanation: 'У курицы 2 ноги, у кролика 4. Если кроликов 4, то у них 16 ног, а у 6 куриц - 12 ног. 16 + 12 = 28!'
+    }
+  ],
+  '5': [
+    {
+      id: '5-1',
+      question: 'На какой свет светофора можно переходить дорогу?',
+      options: ['Красный', 'Желтый', 'Зеленый', 'Любой'],
+      correctAnswer: 2,
+      explanation: 'Переходить дорогу можно только на зеленый свет! Красный - стой, желтый - жди.'
+    },
+    {
+      id: '5-2',
+      question: 'Где безопасно переходить дорогу?',
+      options: ['Где удобно', 'По пешеходному переходу', 'Рядом с машинами', 'Быстро перебежать'],
+      correctAnswer: 1,
+      explanation: 'Дорогу нужно переходить только по пешеходному переходу - там водители вас ждут!'
+    }
+  ]
+};
+
 const teamMembers: TeamMember[] = [
   {
     name: 'Анна Петрова',
@@ -203,6 +286,7 @@ function Index() {
   const [selectedGrade, setSelectedGrade] = useState<Grade>('grade1');
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [quizState, setQuizState] = useState<QuizState | null>(null);
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -246,6 +330,88 @@ function Index() {
   const handleLogout = () => {
     setUser(null);
     setCurrentView('home');
+  };
+
+  const startOlympiad = (olympiadId: string) => {
+    if (!user) return;
+    
+    const questions = mockQuestions[olympiadId];
+    if (!questions) return;
+    
+    const olympiad = mockOlympiads.find(o => o.id === olympiadId);
+    if (!olympiad) return;
+    
+    setQuizState({
+      olympiadId,
+      questions: questions.slice(0, olympiad.questionsCount),
+      currentQuestionIndex: 0,
+      answers: [],
+      timeLeft: olympiad.duration * 60,
+      isComplete: false,
+      startTime: new Date()
+    });
+    
+    setCurrentView('olympiad-quiz');
+  };
+
+  const answerQuestion = (answerIndex: number) => {
+    if (!quizState || quizState.isComplete) return;
+    
+    const newAnswers = [...quizState.answers];
+    newAnswers[quizState.currentQuestionIndex] = answerIndex;
+    
+    const nextIndex = quizState.currentQuestionIndex + 1;
+    const isLastQuestion = nextIndex >= quizState.questions.length;
+    
+    if (isLastQuestion) {
+      const score = calculateScore(quizState.questions, newAnswers);
+      completeOlympiad(score, newAnswers.length);
+    } else {
+      setQuizState({
+        ...quizState,
+        answers: newAnswers,
+        currentQuestionIndex: nextIndex
+      });
+    }
+  };
+
+  const calculateScore = (questions: QuizQuestion[], answers: number[]): number => {
+    return answers.reduce((score, answer, index) => {
+      if (questions[index] && answer === questions[index].correctAnswer) {
+        return score + 1;
+      }
+      return score;
+    }, 0);
+  };
+
+  const completeOlympiad = (score: number, totalQuestions: number) => {
+    if (!user || !quizState) return;
+    
+    const olympiad = mockOlympiads.find(o => o.id === quizState.olympiadId);
+    if (!olympiad) return;
+    
+    const newResult: OlympiadResult = {
+      olympiadId: quizState.olympiadId,
+      score,
+      maxScore: totalQuestions,
+      completedAt: new Date(),
+      position: Math.floor(Math.random() * 100) + 1,
+      totalParticipants: olympiad.participants,
+      certificateUrl: score >= totalQuestions * 0.7 ? `/certificates/cert-${Date.now()}.pdf` : undefined
+    };
+    
+    const updatedUser = {
+      ...user,
+      results: [...user.results.filter(r => r.olympiadId !== quizState.olympiadId), newResult]
+    };
+    
+    setUser(updatedUser);
+    setQuizState({ ...quizState, isComplete: true });
+    
+    setTimeout(() => {
+      setCurrentView('profile');
+      setQuizState(null);
+    }, 3000);
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -417,7 +583,7 @@ function Index() {
   );
 
   const renderOlympiads = () => (
-    <div className="min-h-screen bg-muted py-12">
+    <div className="min-h-screen bg-gradient-to-br from-orange-25 via-white to-primary-25 py-12">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">Олимпиады по классам</h1>
@@ -492,6 +658,7 @@ function Index() {
                           <Button 
                             className="w-full bg-primary hover:bg-primary-600 text-white font-open-sans py-6 text-lg mt-6"
                             disabled={!user}
+                            onClick={() => user && startOlympiad(olympiad.id)}
                           >
                             {user ? 'Начать олимпиаду' : 'Войдите для участия'}
                           </Button>
@@ -515,7 +682,7 @@ function Index() {
   );
 
   const renderFAQ = () => (
-    <div className="min-h-screen bg-white py-12">
+    <div className="min-h-screen bg-gradient-to-br from-white via-primary-25 to-orange-25 py-12">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">Часто задаваемые вопросы</h1>
@@ -555,7 +722,7 @@ function Index() {
   );
 
   const renderAbout = () => (
-    <div className="min-h-screen bg-muted py-12">
+    <div className="min-h-screen bg-gradient-to-br from-primary-25 via-white to-orange-25 py-12">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-montserrat font-bold text-secondary mb-6">О проекте "За скобками"</h1>
@@ -597,23 +764,7 @@ function Index() {
           </Card>
         </div>
 
-        <div className="mb-16">
-          <h2 className="text-3xl font-montserrat font-bold text-secondary text-center mb-12">Наша команда</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="p-8 bg-white text-center hover:shadow-lg transition-shadow">
-                <Avatar className="w-24 h-24 mx-auto mb-6">
-                  <AvatarFallback className="bg-primary text-white text-2xl font-montserrat">
-                    {member.avatar}
-                  </AvatarFallback>
-                </Avatar>
-                <h3 className="font-montserrat font-bold text-xl text-secondary mb-2">{member.name}</h3>
-                <p className="text-primary font-open-sans font-semibold mb-4">{member.role}</p>
-                <p className="text-muted-foreground font-open-sans leading-relaxed">{member.bio}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
@@ -643,7 +794,7 @@ function Index() {
   );
 
   const renderContacts = () => (
-    <div className="min-h-screen bg-white py-12">
+    <div className="min-h-screen bg-gradient-to-br from-primary-25 via-white to-orange-25 py-12">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">Свяжитесь с нами</h1>
@@ -783,7 +934,7 @@ function Index() {
     if (!user) return null;
 
     return (
-      <div className="min-h-screen bg-muted py-12">
+      <div className="min-h-screen bg-gradient-to-br from-orange-25 via-white to-primary-25 py-12">
         <div className="max-w-4xl mx-auto px-4">
           <Card className="p-8 mb-8 animate-fade-in">
             <div className="flex items-center space-x-8 mb-8">
@@ -1004,7 +1155,7 @@ function Index() {
   );
 
   const renderChangePassword = () => (
-    <div className="min-h-screen bg-muted py-12">
+    <div className="min-h-screen bg-gradient-to-br from-primary-25 via-white to-orange-25 py-12">
       <div className="max-w-md mx-auto px-4">
         <Card className="p-8">
           <CardHeader className="text-center pb-6">
@@ -1062,8 +1213,109 @@ function Index() {
     </div>
   );
 
+  const renderOlympiadQuiz = () => {
+    if (!quizState || !user) return null;
+
+    const currentQuestion = quizState.questions[quizState.currentQuestionIndex];
+    const olympiad = mockOlympiads.find(o => o.id === quizState.olympiadId);
+    const progress = ((quizState.currentQuestionIndex + 1) / quizState.questions.length) * 100;
+
+    if (quizState.isComplete) {
+      const score = calculateScore(quizState.questions, quizState.answers);
+      const percentage = Math.round((score / quizState.questions.length) * 100);
+      
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 flex items-center justify-center py-12 px-4">
+          <Card className="w-full max-w-2xl animate-scale-in">
+            <CardContent className="p-12 text-center">
+              <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                {percentage >= 70 ? (
+                  <Icon name="Trophy" size={48} className="text-primary" />
+                ) : (
+                  <Icon name="Award" size={48} className="text-primary" />
+                )}
+              </div>
+              <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">
+                {percentage >= 70 ? 'Поздравляем!' : 'Олимпиада завершена!'}
+              </h1>
+              <p className="text-xl text-muted-foreground font-open-sans mb-8">
+                Вы набрали {score} из {quizState.questions.length} баллов ({percentage}%)
+              </p>
+              {percentage >= 70 && (
+                <Badge className="bg-primary text-white text-lg px-6 py-2 mb-8">
+                  Сертификат будет доступен в профиле!
+                </Badge>
+              )}
+              <p className="text-muted-foreground font-open-sans">
+                Переходим в личный кабинет...
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <Card className="mb-8 animate-fade-in">
+            <CardContent className="p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h1 className="text-2xl font-montserrat font-bold text-secondary mb-2">
+                    {olympiad?.title}
+                  </h1>
+                  <p className="text-muted-foreground font-open-sans">
+                    Вопрос {quizState.currentQuestionIndex + 1} из {quizState.questions.length}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-montserrat font-bold text-primary mb-1">
+                    {Math.floor(quizState.timeLeft / 60)}:{(quizState.timeLeft % 60).toString().padStart(2, '0')}
+                  </div>
+                  <p className="text-sm text-muted-foreground font-open-sans">Времени осталось</p>
+                </div>
+              </div>
+              
+              <div className="w-full bg-gray-200 rounded-full h-3 mb-8">
+                <div 
+                  className="bg-primary h-3 rounded-full transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              
+              <div className="bg-white rounded-2xl p-8 border-2 border-primary-100">
+                <h2 className="text-2xl font-montserrat font-semibold text-secondary mb-8 leading-relaxed">
+                  {currentQuestion.question}
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {currentQuestion.options.map((option, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="p-6 h-auto text-left justify-start border-2 border-gray-200 hover:border-primary hover:bg-primary-50 transition-all duration-300 group"
+                      onClick={() => answerQuestion(index)}
+                    >
+                      <div className="w-8 h-8 bg-primary-100 group-hover:bg-primary-200 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span className="font-montserrat font-bold text-primary">
+                          {String.fromCharCode(65 + index)}
+                        </span>
+                      </div>
+                      <span className="font-open-sans text-lg">{option}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-white font-open-sans">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-orange-50 font-open-sans">
       {renderHeader()}
       {currentView === 'home' && renderHome()}
       {currentView === 'olympiads' && renderOlympiads()}
@@ -1073,6 +1325,7 @@ function Index() {
       {currentView === 'profile' && renderProfile()}
       {currentView === 'auth' && renderAuth()}
       {currentView === 'change-password' && renderChangePassword()}
+      {currentView === 'olympiad-quiz' && renderOlympiadQuiz()}
     </div>
   );
 }
