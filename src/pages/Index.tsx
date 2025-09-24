@@ -424,7 +424,7 @@ function Index() {
   const totalParticipants = mockOlympiads.reduce((sum, o) => sum + o.participants, 0);
 
   const renderHeader = () => (
-    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+    <header className="bg-gradient-to-r from-white to-primary-25 shadow-lg border-b border-primary-100 sticky top-0 z-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-4">
@@ -496,7 +496,7 @@ function Index() {
             ) : (
               <Button 
                 onClick={() => setCurrentView('auth')}
-                className="bg-primary hover:bg-primary-600 text-white font-open-sans px-6"
+                className="bg-gradient-to-r from-primary to-orange-500 hover:from-primary-600 hover:to-orange-600 text-white font-open-sans px-6 shadow-md"
               >
                 Войти
               </Button>
@@ -508,11 +508,11 @@ function Index() {
   );
 
   const renderHome = () => (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-orange-25 to-white">
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-montserrat font-bold text-secondary mb-8 animate-fade-in">
-            Образовательные <span className="text-primary">олимпиады</span><br />
+            Образовательные <span className="bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent">олимпиады</span><br />
             для юных талантов
           </h1>
           <p className="text-xl text-muted-foreground font-open-sans max-w-3xl mx-auto mb-12 animate-fade-in leading-relaxed">
@@ -524,7 +524,7 @@ function Index() {
             <Button 
               size="lg" 
               onClick={() => setCurrentView('olympiads')}
-              className="bg-primary hover:bg-primary-600 text-white font-open-sans px-10 py-4 text-lg"
+              className="bg-gradient-to-r from-primary to-orange-500 hover:from-primary-600 hover:to-orange-600 text-white font-open-sans px-10 py-4 text-lg shadow-lg"
             >
               <Icon name="Trophy" size={24} className="mr-3" />
               Начать олимпиаду
@@ -533,7 +533,7 @@ function Index() {
               size="lg" 
               variant="outline" 
               onClick={() => setCurrentView('about')}
-              className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-open-sans px-10 py-4 text-lg"
+              className="border-2 border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-orange-500 hover:text-white font-open-sans px-10 py-4 text-lg shadow-md"
             >
               <Icon name="BookOpen" size={24} className="mr-3" />
               Узнать больше
@@ -544,14 +544,14 @@ function Index() {
             {Object.entries(gradeNames).map(([grade, name]) => (
               <Card 
                 key={grade}
-                className="p-8 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 border-2 border-primary-100 hover:border-primary-200 animate-fade-in group"
+                className="p-8 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 border-2 border-primary-100 hover:border-primary-200 animate-fade-in group bg-gradient-to-br from-white to-primary-25 hover:from-primary-25 hover:to-orange-25"
                 onClick={() => {
                   setSelectedGrade(grade as Grade);
                   setCurrentView('olympiads');
                 }}
               >
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-primary-100 group-hover:bg-primary-200 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-colors">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 group-hover:from-primary-200 group-hover:to-orange-200 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 shadow-md">
                     <Icon name="GraduationCap" size={32} className="text-primary" />
                   </div>
                   <h3 className="font-montserrat font-bold text-secondary text-lg mb-2">{name}</h3>
@@ -564,16 +564,16 @@ function Index() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div className="text-center animate-fade-in">
-              <div className="text-5xl font-montserrat font-bold text-primary mb-3">{totalParticipants.toLocaleString()}+</div>
+            <div className="text-center animate-fade-in bg-gradient-to-br from-white to-primary-25 p-8 rounded-2xl shadow-lg">
+              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">{totalParticipants.toLocaleString()}+</div>
               <div className="text-lg text-muted-foreground font-open-sans">Участников</div>
             </div>
-            <div className="text-center animate-fade-in">
-              <div className="text-5xl font-montserrat font-bold text-primary mb-3">{mockOlympiads.length}+</div>
+            <div className="text-center animate-fade-in bg-gradient-to-br from-white to-orange-25 p-8 rounded-2xl shadow-lg">
+              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">{mockOlympiads.length}+</div>
               <div className="text-lg text-muted-foreground font-open-sans">Олимпиад</div>
             </div>
-            <div className="text-center animate-fade-in">
-              <div className="text-5xl font-montserrat font-bold text-primary mb-3">98%</div>
+            <div className="text-center animate-fade-in bg-gradient-to-br from-white to-primary-25 p-8 rounded-2xl shadow-lg">
+              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">98%</div>
               <div className="text-lg text-muted-foreground font-open-sans">Довольных родителей</div>
             </div>
           </div>
