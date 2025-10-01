@@ -569,7 +569,7 @@ function Index() {
               <div className="text-lg text-muted-foreground font-open-sans">Участников</div>
             </div>
             <div className="text-center animate-fade-in bg-gradient-to-br from-white to-orange-25 p-8 rounded-2xl shadow-lg">
-              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">{mockOlympiads.length}+</div>
+              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">40+</div>
               <div className="text-lg text-muted-foreground font-open-sans">Олимпиад</div>
             </div>
             <div className="text-center animate-fade-in bg-gradient-to-br from-white to-primary-25 p-8 rounded-2xl shadow-lg">
