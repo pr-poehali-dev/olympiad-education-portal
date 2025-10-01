@@ -555,9 +555,7 @@ function Index() {
                     <Icon name="GraduationCap" size={32} className="text-primary" />
                   </div>
                   <h3 className="font-montserrat font-bold text-secondary text-lg mb-2">{name}</h3>
-                  <p className="text-muted-foreground font-open-sans">
-                    {mockOlympiads.filter(o => o.grade === grade).length} олимпиад
-                  </p>
+                  <p className="text-muted-foreground font-open-sans">9 олимпиад</p>
                 </div>
               </Card>
             ))}
@@ -565,7 +563,7 @@ function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
             <div className="text-center animate-fade-in bg-gradient-to-br from-white to-primary-25 p-8 rounded-2xl shadow-lg">
-              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">{totalParticipants.toLocaleString()}+</div>
+              <div className="text-5xl font-montserrat font-bold bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent mb-3">70000+</div>
               <div className="text-lg text-muted-foreground font-open-sans">Участников</div>
             </div>
             <div className="text-center animate-fade-in bg-gradient-to-br from-white to-orange-25 p-8 rounded-2xl shadow-lg">
