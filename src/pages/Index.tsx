@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
 
-type Grade = 'preschool' | 'grade1' | 'grade2' | 'grade3' | 'grade4';
+type Grade = 'grade1' | 'grade2' | 'grade3' | 'grade4' | 'grade5';
 type Subject = 'math' | 'russian' | 'english' | 'reading' | 'traffic' | 'informatics' | 'logic' | 'world' | 'meta';
 type ViewType = 'home' | 'olympiads' | 'faq' | 'about' | 'contacts' | 'auth' | 'profile' | 'change-password' | 'olympiad-quiz';
 
@@ -78,11 +78,11 @@ interface QuizState {
 }
 
 const gradeNames = {
-  preschool: 'Дошкольная группа',
   grade1: '1 класс',
   grade2: '2 класс', 
   grade3: '3 класс',
-  grade4: '4 класс'
+  grade4: '4 класс',
+  grade5: '5 класс'
 };
 
 const subjectNames = {
@@ -161,9 +161,9 @@ const mockOlympiads: Olympiad[] = [
   {
     id: '5',
     subject: 'traffic',
-    grade: 'preschool',
+    grade: 'grade1',
     title: 'Безопасная дорога',
-    description: 'Основы дорожной безопасности для самых маленьких',
+    description: 'Основы дорожной безопасности для первоклассников',
     duration: 20,
     questionsCount: 8,
     difficulty: 'easy',
