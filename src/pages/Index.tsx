@@ -632,15 +632,15 @@ function Index() {
                           <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground">
                             <div className="flex items-center space-x-2">
                               <Icon name="Clock" size={18} className="text-primary" />
-                              <span className="font-open-sans">{olympiad.duration} мин</span>
+                              <span className="font-open-sans">15 мин</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <Icon name="HelpCircle" size={18} className="text-primary" />
-                              <span className="font-open-sans">{olympiad.questionsCount} вопросов</span>
+                              <span className="font-open-sans">10 вопросов</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <Icon name="Users" size={18} className="text-primary" />
-                              <span className="font-open-sans">{olympiad.participants} участников</span>
+                              <span className="font-open-sans">4 623 участников</span>
                             </div>
                             <div className="flex items-center space-x-2">
                               <Icon name="Award" size={18} className="text-primary" />
