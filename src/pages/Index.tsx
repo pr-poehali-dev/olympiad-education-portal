@@ -993,11 +993,8 @@ function Index() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-4xl font-montserrat font-bold text-primary mb-1">
+                            <div className="text-4xl font-montserrat font-bold text-primary mb-4">
                               {percentage}%
-                            </div>
-                            <div className="text-lg text-muted-foreground font-open-sans mb-4">
-                              {result.score} из {result.maxScore} баллов
                             </div>
                             {result.certificateUrl && (
                               <Button 
