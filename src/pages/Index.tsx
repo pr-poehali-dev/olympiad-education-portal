@@ -645,7 +645,7 @@ function Index() {
                             disabled={!user}
                             onClick={() => user && startOlympiad(olympiad.id)}
                           >
-                            {user ? 'Начать олимпиаду' : 'Войдите для участия'}
+                            {user ? 'Начать олимпиаду' : 'Примите участие'}
                           </Button>
                         </div>
                       ) : (
