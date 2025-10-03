@@ -429,7 +429,7 @@ function Index() {
               onClick={() => setCurrentView('home')}
             >
               <img 
-                src="https://cdn.poehali.dev/files/6818c09c-f733-4324-9729-d22cc2649ccf.png" 
+                src="https://cdn.poehali.dev/files/9b209914-bd9b-4460-b717-2bfabce4ce7e.png" 
                 alt="За скобками" 
                 className="h-12 w-auto"
               />
