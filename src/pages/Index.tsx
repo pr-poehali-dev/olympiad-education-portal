@@ -989,9 +989,6 @@ function Index() {
                                 <span className="font-open-sans">
                                   Пройдено: {result.completedAt.toLocaleDateString('ru-RU')}
                                 </span>
-                                <span className="font-open-sans">
-                                  Место: {result.position} из {result.totalParticipants}
-                                </span>
                               </div>
                             </div>
                           </div>
