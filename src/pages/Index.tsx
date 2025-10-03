@@ -626,7 +626,7 @@ function Index() {
                           <p className="text-muted-foreground font-open-sans leading-relaxed">
                             {olympiad.description}
                           </p>
-                          <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground">
+                          <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground">
                             <div className="flex items-center space-x-2">
                               <Icon name="Clock" size={18} className="text-primary" />
                               <span className="font-open-sans">15 мин</span>
@@ -638,16 +638,6 @@ function Index() {
                             <div className="flex items-center space-x-2">
                               <Icon name="Users" size={18} className="text-primary" />
                               <span className="font-open-sans">4 623 участников</span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <Icon name="Award" size={18} className="text-primary" />
-                              <Badge 
-                                variant={olympiad.difficulty === 'easy' ? 'secondary' : 'default'}
-                                className="font-open-sans"
-                              >
-                                {olympiad.difficulty === 'easy' ? 'Легкий' : 
-                                 olympiad.difficulty === 'medium' ? 'Средний' : 'Сложный'}
-                              </Badge>
                             </div>
                           </div>
                           <Button 
@@ -820,16 +810,6 @@ function Index() {
                 <div>
                   <h3 className="font-montserrat font-semibold text-secondary mb-1">Телефон</h3>
                   <p className="text-muted-foreground font-open-sans">+7 (495) 123-45-67</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
-                  <Icon name="MapPin" size={24} className="text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-montserrat font-semibold text-secondary mb-1">Адрес</h3>
-                  <p className="text-muted-foreground font-open-sans">г. Москва, ул. Образовательная, д. 1</p>
                 </div>
               </div>
 
