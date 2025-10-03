@@ -433,6 +433,11 @@ function Index() {
                 alt="За скобками" 
                 className="h-12 w-auto"
               />
+              <img 
+                src="https://cdn.poehali.dev/files/1d1bd7ee-b7d7-4e6a-bf25-0dc2d9086f96.png" 
+                alt="ЗА СКОБКАМИ" 
+                className="h-8 w-auto"
+              />
             </div>
           </div>
           
