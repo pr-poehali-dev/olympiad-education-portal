@@ -428,10 +428,11 @@ function Index() {
               className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
               onClick={() => setCurrentView('home')}
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-600 rounded-xl flex items-center justify-center">
-                <Icon name="Trophy" size={24} className="text-white" />
-              </div>
-              <h1 className="text-2xl font-montserrat font-bold text-secondary">За скобками</h1>
+              <img 
+                src="https://cdn.poehali.dev/files/6818c09c-f733-4324-9729-d22cc2649ccf.png" 
+                alt="За скобками" 
+                className="h-12 w-auto"
+              />
             </div>
           </div>
           
