@@ -993,9 +993,6 @@ function Index() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-4xl font-montserrat font-bold text-primary mb-4">
-                              {percentage}%
-                            </div>
                             {result.certificateUrl && (
                               <Button 
                                 variant="outline" 
