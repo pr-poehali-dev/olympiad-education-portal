@@ -498,7 +498,7 @@ function Index() {
             ) : (
               <Button 
                 onClick={() => setCurrentView('auth')}
-                className="bg-gradient-to-r from-primary to-orange-500 hover:from-primary-600 hover:to-orange-600 text-white font-open-sans px-6 shadow-md"
+                className="bg-primary hover:bg-primary-600 text-white font-open-sans px-6 shadow-md"
               >
                 Войти
               </Button>
@@ -526,7 +526,7 @@ function Index() {
             <Button 
               size="lg" 
               onClick={() => setCurrentView('olympiads')}
-              className="bg-gradient-to-r from-primary to-orange-500 hover:from-primary-600 hover:to-orange-600 text-white font-open-sans px-10 py-4 text-lg shadow-lg"
+              className="bg-primary hover:bg-primary-600 text-white font-open-sans px-10 py-4 text-lg shadow-lg"
             >
               <Icon name="Trophy" size={24} className="mr-3" />
               Начать олимпиаду
@@ -535,7 +535,7 @@ function Index() {
               size="lg" 
               variant="outline" 
               onClick={() => setCurrentView('about')}
-              className="border-2 border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-orange-500 hover:text-white font-open-sans px-10 py-4 text-lg shadow-md"
+              className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-open-sans px-10 py-4 text-lg shadow-md"
             >
               <Icon name="BookOpen" size={24} className="mr-3" />
               Узнать больше
