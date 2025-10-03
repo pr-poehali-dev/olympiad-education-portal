@@ -776,7 +776,7 @@ function Index() {
             <div className="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <Icon name="Users" size={32} className="text-primary" />
             </div>
-            <h3 className="font-montserrat font-bold text-2xl text-primary mb-2">{totalParticipants.toLocaleString()}+</h3>
+            <h3 className="font-montserrat font-bold text-2xl text-primary mb-2">74 000+</h3>
             <p className="text-muted-foreground font-open-sans">Участников за все время</p>
           </div>
           <div className="text-center">
