@@ -812,7 +812,7 @@ function Index() {
                 </div>
                 <div>
                   <h3 className="font-montserrat font-semibold text-secondary mb-1">Email</h3>
-                  <p className="text-muted-foreground font-open-sans">info@zaskobkami.ru</p>
+                  <p className="text-muted-foreground font-open-sans">za-skobkami.info@yandex.ru</p>
                 </div>
               </div>
 
