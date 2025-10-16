@@ -287,24 +287,6 @@ function Index() {
           </Card>
         </div>
 
-        <div className="mb-16">
-          <h2 className="text-3xl font-montserrat font-bold text-center text-secondary mb-12">Наша команда</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="p-8 text-center border-2 border-primary-100 hover:shadow-xl transition-shadow">
-                <Avatar className="w-24 h-24 mx-auto mb-4">
-                  <AvatarFallback className="bg-primary text-white text-2xl font-montserrat">
-                    {member.avatar}
-                  </AvatarFallback>
-                </Avatar>
-                <h3 className="font-montserrat font-bold text-xl text-secondary mb-2">{member.name}</h3>
-                <p className="text-primary font-open-sans font-semibold mb-3">{member.role}</p>
-                <p className="text-muted-foreground font-open-sans leading-relaxed">{member.bio}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card className="p-8 text-center border-2 border-primary-100">
             <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
