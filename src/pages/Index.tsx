@@ -796,7 +796,6 @@ function Index() {
               <div className="text-sm font-open-sans space-y-2 text-gray-300">
                 <p><span className="text-gray-400">ИНН:</span> 3702035903</p>
                 <p><span className="text-gray-400">ОГРНИП:</span> 324370000044869</p>
-                <p><span className="text-gray-400">Адрес:</span> 153013, г. Иваново, пр-кт Текстильщиков д.2 кв.66</p>
               </div>
             </div>
           </div>
