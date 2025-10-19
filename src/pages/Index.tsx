@@ -757,26 +757,47 @@ function Index() {
       {currentView === 'change-password' && renderChangePassword()}
       {currentView === 'olympiad-quiz' && renderOlympiadQuiz()}
       
-      <footer className="bg-secondary text-white py-8 mt-16">
+      <footer className="bg-secondary text-white py-12 mt-16">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm font-open-sans">
-              <a href="#" className="hover:text-primary transition-colors">
-                Политика конфиденциальности
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                Положение об олимпиаде
-              </a>
-              <a href="#" className="hover:text-primary transition-colors">
-                Государственная лицензия
-              </a>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="font-montserrat font-bold text-lg mb-4">Документы</h3>
+              <div className="flex flex-col gap-3 text-sm font-open-sans">
+                <a href="#" className="hover:text-primary transition-colors">
+                  Политика конфиденциальности
+                </a>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Положение об олимпиаде
+                </a>
+                <a href="#" className="hover:text-primary transition-colors">
+                  Государственная лицензия
+                </a>
+              </div>
             </div>
             
-            <div className="flex items-center gap-2">
-              <Icon name="Mail" size={20} className="text-primary" />
-              <a href="mailto:info@zaskobkami.ru" className="text-sm font-open-sans hover:text-primary transition-colors">
-                info@zaskobkami.ru
-              </a>
+            <div>
+              <h3 className="font-montserrat font-bold text-lg mb-4">Контакты</h3>
+              <div className="flex flex-col gap-3 text-sm font-open-sans">
+                <div className="flex items-center gap-2">
+                  <Icon name="Mail" size={18} className="text-primary" />
+                  <a href="mailto:info@zaskobkami.ru" className="hover:text-primary transition-colors">
+                    info@zaskobkami.ru
+                  </a>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Icon name="Phone" size={18} className="text-primary" />
+                  <span>+7 (999) 123-45-67</span>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-montserrat font-bold text-lg mb-4">Реквизиты</h3>
+              <div className="text-sm font-open-sans space-y-2 text-gray-300">
+                <p><span className="text-gray-400">ИНН:</span> 3702035903</p>
+                <p><span className="text-gray-400">ОГРНИП:</span> 324370000044869</p>
+                <p><span className="text-gray-400">Адрес:</span> 153013, г. Иваново, пр-кт Текстильщиков д.2 кв.66</p>
+              </div>
             </div>
           </div>
           
