@@ -554,9 +554,6 @@ function Index() {
                                 <span className="text-sm text-muted-foreground font-open-sans">
                                   Пройдено: {result.completedAt.toLocaleDateString('ru-RU')}
                                 </span>
-                                <Badge variant="outline" className="font-open-sans">
-                                  Место: {result.position} из {result.totalParticipants}
-                                </Badge>
                               </div>
                             </div>
                           </div>
