@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import Icon from '@/components/ui/icon';
 import { UserProfile, ViewType } from '@/types';
 
 interface HeaderProps {
@@ -9,6 +12,13 @@ interface HeaderProps {
 }
 
 export default function Header({ user, onViewChange, onLogout }: HeaderProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleNavigation = (view: ViewType) => {
+    onViewChange(view);
+    setIsOpen(false);
+  };
+
   return (
     <header className="bg-white shadow-lg border-b border-primary-100 sticky top-0 z-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,6 +73,83 @@ export default function Header({ user, onViewChange, onLogout }: HeaderProps) {
           </nav>
 
           <div className="flex items-center space-x-4">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon">
+                  <Icon name="Menu" size={24} className="text-secondary" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[280px] sm:w-[320px]">
+                <SheetHeader>
+                  <SheetTitle className="font-montserrat text-2xl text-secondary">Меню</SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col space-y-4 mt-8">
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleNavigation('home')}
+                    className="justify-start font-open-sans text-lg hover:bg-primary-100"
+                  >
+                    <Icon name="Home" size={20} className="mr-3" />
+                    Главная
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleNavigation('olympiads')}
+                    className="justify-start font-open-sans text-lg hover:bg-primary-100"
+                  >
+                    <Icon name="Trophy" size={20} className="mr-3" />
+                    Олимпиады
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleNavigation('faq')}
+                    className="justify-start font-open-sans text-lg hover:bg-primary-100"
+                  >
+                    <Icon name="HelpCircle" size={20} className="mr-3" />
+                    FAQ
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleNavigation('about')}
+                    className="justify-start font-open-sans text-lg hover:bg-primary-100"
+                  >
+                    <Icon name="Info" size={20} className="mr-3" />
+                    О нас
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleNavigation('contacts')}
+                    className="justify-start font-open-sans text-lg hover:bg-primary-100"
+                  >
+                    <Icon name="Mail" size={20} className="mr-3" />
+                    Контакты
+                  </Button>
+                  {user && (
+                    <>
+                      <div className="border-t pt-4 mt-4">
+                        <Button
+                          variant="ghost"
+                          onClick={() => handleNavigation('profile')}
+                          className="justify-start font-open-sans text-lg hover:bg-primary-100 w-full"
+                        >
+                          <Icon name="User" size={20} className="mr-3" />
+                          Профиль
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => { onLogout(); setIsOpen(false); }}
+                          className="justify-start font-open-sans text-lg hover:bg-primary-100 w-full text-muted-foreground"
+                        >
+                          <Icon name="LogOut" size={20} className="mr-3" />
+                          Выйти
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
+
             {user ? (
               <div className="flex items-center space-x-3">
                 <Avatar 
