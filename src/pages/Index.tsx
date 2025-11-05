@@ -133,38 +133,38 @@ function Index() {
   );
 
   const renderOlympiads = () => (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-6 sm:py-8 md:py-12">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">Олимпиады по классам</h1>
-          <p className="text-lg text-muted-foreground font-open-sans max-w-2xl mx-auto">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-montserrat font-bold text-secondary mb-3 sm:mb-4">Олимпиады по классам</h1>
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-open-sans max-w-2xl mx-auto">
             Выберите класс и предмет для участия в олимпиаде. Все задания адаптированы под возраст участников.
           </p>
         </div>
         
         <Tabs value={selectedGrade} onValueChange={(value) => setSelectedGrade(value as Grade)}>
-          <TabsList className="grid w-full grid-cols-5 mb-12 h-14">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 mb-6 sm:mb-8 md:mb-12 h-auto sm:h-12 md:h-14">
             {Object.entries(gradeNames).map(([grade, name]) => (
-              <TabsTrigger key={grade} value={grade} className="font-open-sans text-base py-3">
+              <TabsTrigger key={grade} value={grade} className="font-open-sans text-xs sm:text-sm md:text-base py-2 sm:py-3">
                 {name}
               </TabsTrigger>
             ))}
           </TabsList>
 
           <TabsContent value={selectedGrade}>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
               {Object.entries(subjectNames).map(([subject, name]) => {
                 const olympiad = filteredOlympiads.find(o => o.subject === subject);
                 return (
                   <Card key={subject} className="hover:shadow-xl transition-all duration-300 animate-fade-in group border-2 hover:border-primary-200">
-                    <CardHeader className="pb-4">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-14 h-14 bg-primary-100 group-hover:bg-primary-200 rounded-xl flex items-center justify-center transition-colors">
-                          <Icon name={subjectIcons[subject as keyof typeof subjectIcons] as any} size={28} className="text-primary" />
+                    <CardHeader className="pb-3 sm:pb-4">
+                      <div className="flex items-center space-x-3 sm:space-x-4">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary-100 group-hover:bg-primary-200 rounded-xl flex items-center justify-center transition-colors">
+                          <Icon name={subjectIcons[subject as keyof typeof subjectIcons] as any} size={24} className="text-primary sm:w-7 sm:h-7" />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="font-montserrat text-xl text-secondary">{name}</CardTitle>
-                          <CardDescription className="font-open-sans text-base">
+                          <CardTitle className="font-montserrat text-lg sm:text-xl text-secondary">{name}</CardTitle>
+                          <CardDescription className="font-open-sans text-sm sm:text-base">
                             {gradeNames[selectedGrade]}
                           </CardDescription>
                         </div>
@@ -172,27 +172,28 @@ function Index() {
                     </CardHeader>
                     <CardContent>
                       {olympiad ? (
-                        <div className="space-y-4">
-                          <h3 className="font-montserrat font-semibold text-lg text-secondary">{olympiad.title}</h3>
-                          <p className="text-muted-foreground font-open-sans leading-relaxed">
+                        <div className="space-y-3 sm:space-y-4">
+                          <h3 className="font-montserrat font-semibold text-base sm:text-lg text-secondary">{olympiad.title}</h3>
+                          <p className="text-sm sm:text-base text-muted-foreground font-open-sans leading-relaxed">
                             {olympiad.description}
                           </p>
-                          <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground">
-                            <div className="flex items-center space-x-2">
-                              <Icon name="Clock" size={18} className="text-primary" />
+                          <div className="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
+                            <div className="flex items-center space-x-1 sm:space-x-2">
+                              <Icon name="Clock" size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
                               <span className="font-open-sans">15 мин</span>
                             </div>
-                            <div className="flex items-center space-x-2">
-                              <Icon name="HelpCircle" size={18} className="text-primary" />
+                            <div className="flex items-center space-x-1 sm:space-x-2">
+                              <Icon name="HelpCircle" size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
                               <span className="font-open-sans">10 вопросов</span>
                             </div>
-                            <div className="flex items-center space-x-2">
-                              <Icon name="Users" size={18} className="text-primary" />
-                              <span className="font-open-sans">4 623 участников</span>
+                            <div className="flex items-center space-x-1 sm:space-x-2">
+                              <Icon name="Users" size={16} className="text-primary sm:w-[18px] sm:h-[18px]" />
+                              <span className="font-open-sans hidden sm:inline">4 623 участников</span>
+                              <span className="font-open-sans sm:hidden">4623</span>
                             </div>
                           </div>
                           <Button 
-                            className="w-full bg-primary hover:bg-primary-600 text-white font-open-sans py-6 text-lg mt-6"
+                            className="w-full bg-primary hover:bg-primary-600 text-white font-open-sans py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg mt-4 sm:mt-6"
                             disabled={!user}
                             onClick={() => user && startOlympiad(olympiad.id)}
                           >
@@ -258,62 +259,62 @@ function Index() {
   );
 
   const renderAbout = () => (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-6 sm:py-8 md:py-12">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">О нашем проекте</h1>
-          <p className="text-lg text-muted-foreground font-open-sans max-w-3xl mx-auto">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-montserrat font-bold text-secondary mb-3 sm:mb-4">О нашем проекте</h1>
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-open-sans max-w-3xl mx-auto">
             Мы создаем образовательные олимпиады для развития потенциала каждого ребенка
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-          <Card className="p-8 border-2 border-primary-100">
-            <Icon name="Target" size={48} className="text-primary mb-6" />
-            <h2 className="font-montserrat font-bold text-2xl text-secondary mb-4">Наша миссия</h2>
-            <p className="font-open-sans text-muted-foreground leading-relaxed text-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-12 mb-8 sm:mb-12 md:mb-16">
+          <Card className="p-5 sm:p-6 md:p-8 border-2 border-primary-100">
+            <Icon name="Target" size={36} className="text-primary mb-4 sm:mb-5 md:mb-6 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+            <h2 className="font-montserrat font-bold text-xl sm:text-2xl text-secondary mb-3 sm:mb-4">Наша миссия</h2>
+            <p className="font-open-sans text-muted-foreground leading-relaxed text-sm sm:text-base md:text-lg">
               Предоставить каждому ребенку возможность развивать свои таланты через интересные и качественные 
               образовательные олимпиады, доступные онлайн в любое время.
             </p>
           </Card>
           
-          <Card className="p-8 border-2 border-primary-100">
-            <Icon name="Eye" size={48} className="text-primary mb-6" />
-            <h2 className="font-montserrat font-bold text-2xl text-secondary mb-4">Наше видение</h2>
-            <p className="font-open-sans text-muted-foreground leading-relaxed text-lg">
+          <Card className="p-5 sm:p-6 md:p-8 border-2 border-primary-100">
+            <Icon name="Eye" size={36} className="text-primary mb-4 sm:mb-5 md:mb-6 sm:w-10 sm:h-10 md:w-12 md:h-12" />
+            <h2 className="font-montserrat font-bold text-xl sm:text-2xl text-secondary mb-3 sm:mb-4">Наше видение</h2>
+            <p className="font-open-sans text-muted-foreground leading-relaxed text-sm sm:text-base md:text-lg">
               Мы стремимся стать ведущей платформой для интеллектуального развития детей, 
               создавая увлекательные задания, которые вдохновляют на изучение нового.
             </p>
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="p-8 text-center border-2 border-primary-100">
-            <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icon name="Award" size={32} className="text-primary" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+          <Card className="p-5 sm:p-6 md:p-8 text-center border-2 border-primary-100">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Icon name="Award" size={24} className="text-primary sm:w-7 sm:h-7 md:w-8 md:h-8" />
             </div>
-            <h3 className="font-montserrat font-bold text-xl text-secondary mb-3">Качество</h3>
-            <p className="font-open-sans text-muted-foreground leading-relaxed">
+            <h3 className="font-montserrat font-bold text-lg sm:text-xl text-secondary mb-2 sm:mb-3">Качество</h3>
+            <p className="font-open-sans text-sm sm:text-base text-muted-foreground leading-relaxed">
               Все задания разработаны профессиональными педагогами и методистами
             </p>
           </Card>
           
-          <Card className="p-8 text-center border-2 border-primary-100">
-            <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icon name="Heart" size={32} className="text-primary" />
+          <Card className="p-5 sm:p-6 md:p-8 text-center border-2 border-primary-100">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Icon name="Heart" size={24} className="text-primary sm:w-7 sm:h-7 md:w-8 md:h-8" />
             </div>
-            <h3 className="font-montserrat font-bold text-xl text-secondary mb-3">Забота</h3>
-            <p className="font-open-sans text-muted-foreground leading-relaxed">
+            <h3 className="font-montserrat font-bold text-lg sm:text-xl text-secondary mb-2 sm:mb-3">Забота</h3>
+            <p className="font-open-sans text-sm sm:text-base text-muted-foreground leading-relaxed">
               Мы заботимся о комфорте и безопасности каждого участника
             </p>
           </Card>
           
-          <Card className="p-8 text-center border-2 border-primary-100">
-            <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icon name="Lightbulb" size={32} className="text-primary" />
+          <Card className="p-5 sm:p-6 md:p-8 text-center border-2 border-primary-100">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Icon name="Lightbulb" size={24} className="text-primary sm:w-7 sm:h-7 md:w-8 md:h-8" />
             </div>
-            <h3 className="font-montserrat font-bold text-xl text-secondary mb-3">Инновации</h3>
-            <p className="font-open-sans text-muted-foreground leading-relaxed">
+            <h3 className="font-montserrat font-bold text-lg sm:text-xl text-secondary mb-2 sm:mb-3">Инновации</h3>
+            <p className="font-open-sans text-sm sm:text-base text-muted-foreground leading-relaxed">
               Используем современные подходы к образованию и оценке знаний
             </p>
           </Card>
@@ -323,26 +324,26 @@ function Index() {
   );
 
   const renderContacts = () => (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-6 sm:py-8 md:py-12">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-montserrat font-bold text-secondary mb-4">Свяжитесь с нами</h1>
-          <p className="text-lg text-muted-foreground font-open-sans">
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-montserrat font-bold text-secondary mb-3 sm:mb-4">Свяжитесь с нами</h1>
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-open-sans">
             Мы всегда рады ответить на ваши вопросы и предложения
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <Card className="p-6 text-center border-2 border-primary-100">
-            <Icon name="Mail" size={40} className="text-primary mx-auto mb-4" />
-            <h3 className="font-montserrat font-semibold text-lg text-secondary mb-2">Email</h3>
-            <p className="font-open-sans text-muted-foreground">info@zaskobkami.ru</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 md:mb-12">
+          <Card className="p-4 sm:p-5 md:p-6 text-center border-2 border-primary-100">
+            <Icon name="Mail" size={32} className="text-primary mx-auto mb-3 sm:mb-4 sm:w-9 sm:h-9 md:w-10 md:h-10" />
+            <h3 className="font-montserrat font-semibold text-base sm:text-lg text-secondary mb-2">Email</h3>
+            <p className="font-open-sans text-xs sm:text-sm md:text-base text-muted-foreground break-all">info@zaskobkami.ru</p>
           </Card>
           
-          <Card className="p-6 text-center border-2 border-primary-100">
-            <Icon name="Phone" size={40} className="text-primary mx-auto mb-4" />
-            <h3 className="font-montserrat font-semibold text-lg text-secondary mb-2">Телефон</h3>
-            <p className="font-open-sans text-muted-foreground">+7 (999) 123-45-67</p>
+          <Card className="p-4 sm:p-5 md:p-6 text-center border-2 border-primary-100">
+            <Icon name="Phone" size={32} className="text-primary mx-auto mb-3 sm:mb-4 sm:w-9 sm:h-9 md:w-10 md:h-10" />
+            <h3 className="font-montserrat font-semibold text-base sm:text-lg text-secondary mb-2">Телефон</h3>
+            <p className="font-open-sans text-xs sm:text-sm md:text-base text-muted-foreground">+7 (999) 123-45-67</p>
           </Card>
           
           <Card className="p-6 text-center border-2 border-primary-100">
@@ -352,12 +353,12 @@ function Index() {
           </Card>
         </div>
 
-        <Card className="p-8 border-2 border-primary-100">
-          <h2 className="font-montserrat font-bold text-2xl text-secondary mb-6">Отправить сообщение</h2>
-          <form onSubmit={handleContactSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="p-5 sm:p-6 md:p-8 border-2 border-primary-100">
+          <h2 className="font-montserrat font-bold text-xl sm:text-2xl text-secondary mb-4 sm:mb-5 md:mb-6">Отправить сообщение</h2>
+          <form onSubmit={handleContactSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
               <div>
-                <Label htmlFor="name" className="font-open-sans text-base">Ваше имя</Label>
+                <Label htmlFor="name" className="font-open-sans text-sm sm:text-base">Ваше имя</Label>
                 <Input 
                   id="name"
                   value={contactForm.name}
@@ -367,7 +368,7 @@ function Index() {
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="font-open-sans text-base">Email</Label>
+                <Label htmlFor="email" className="font-open-sans text-sm sm:text-base">Email</Label>
                 <Input 
                   id="email"
                   type="email"
@@ -380,7 +381,7 @@ function Index() {
             </div>
             
             <div>
-              <Label htmlFor="subject" className="font-open-sans text-base">Тема сообщения</Label>
+              <Label htmlFor="subject" className="font-open-sans text-sm sm:text-base">Тема сообщения</Label>
               <Input 
                 id="subject"
                 value={contactForm.subject}
@@ -391,7 +392,7 @@ function Index() {
             </div>
             
             <div>
-              <Label htmlFor="message" className="font-open-sans text-base">Сообщение</Label>
+              <Label htmlFor="message" className="font-open-sans text-sm sm:text-base">Сообщение</Label>
               <Textarea 
                 id="message"
                 value={contactForm.message}
@@ -403,9 +404,9 @@ function Index() {
             
             <Button 
               type="submit"
-              className="w-full bg-primary hover:bg-primary-600 text-white font-open-sans py-6 text-lg"
+              className="w-full bg-primary hover:bg-primary-600 text-white font-open-sans py-4 sm:py-5 md:py-6 text-sm sm:text-base md:text-lg"
             >
-              <Icon name="Send" size={20} className="mr-2" />
+              <Icon name="Send" size={18} className="mr-2 sm:w-5 sm:h-5" />
               Отправить сообщение
             </Button>
           </form>
